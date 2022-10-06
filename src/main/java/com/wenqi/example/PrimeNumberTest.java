@@ -11,8 +11,9 @@ package com.wenqi.example;
 public class PrimeNumberTest {
 
     public static void main(String[] args) {
-        int number = 13;
+        int number = 59;
         System.out.println(isPrimeNumber(number) ? "是素数" : "不是素数");
+        System.out.println(isPrimeNumberBetter(number) ? "是素数" : "不是素数");
     }
 
 
@@ -22,6 +23,23 @@ public class PrimeNumberTest {
         }
 
         for (int i = 2; i < number - 1; i++) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 开根号算法
+     */
+    private static boolean isPrimeNumberBetter(int number) {
+        if (number <= 3) {
+            return true;
+        }
+
+        int endNum = (int) Math.sqrt(number);
+        for (int i = 2; i < endNum; i++) {
             if (number % i == 0) {
                 return false;
             }
