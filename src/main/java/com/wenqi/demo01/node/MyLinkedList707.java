@@ -7,18 +7,18 @@ package com.wenqi.demo01.node;
 public class MyLinkedList707 {
 
     private ListNode head;
-    private int length;
+    private int size;
 
     public MyLinkedList707() {
-        length = 0;
+        size = 0;
         head = new ListNode(0);
     }
 
     public int get(int index) {
-        if (index > length - 1 || head == null) {
+        if (index < 0 || index > size - 1) {
             return -1;
         }
-        ListNode temp = head;
+        ListNode temp = head.next;
         while (index > 0) {
             temp = temp.next;
             index--;
@@ -27,54 +27,48 @@ public class MyLinkedList707 {
     }
 
     public void addAtHead(int val) {
-        ListNode node = new ListNode(val);
-        node.next = head;
-        head = node;
-        length++;
+        addAtIndex(0, val);
     }
 
     public void addAtTail(int val) {
-        ListNode node = new ListNode(val);
-        if (head == null) {
-            this.head = node;
-            length = 1;
-            return;
-        }
-        ListNode temp = head;
-        int point = length - 1;
-        while (point > 0) {
-            temp = temp.next;
-            point--;
-        }
-        temp.next = node;
-        length++;
+        addAtIndex(size, val);
     }
 
     public void addAtIndex(int index, int val) {
-        if (index == length - 1) {
-            addAtTail(val);
-        } else if (index < 0) {
-            addAtHead(val);
+        if (index > size) {
+            return;
         }
+
+        if (index < 0) {
+            index = 0;
+        }
+        ListNode node = new ListNode(val);
+        ListNode temp = head;
+        while (index > 0) {
+            temp = temp.next;
+            index--;
+        }
+        node.next = temp.next;
+        temp.next = node;
+        size++;
     }
 
     public void deleteAtIndex(int index) {
-        if (index < 0 || index > length - 1) {
+        if (index < 0 || index > size - 1) {
             return;
         }
 
         if (index == 0) {
             // 删除头节点
-            head = head.next;
+            head.next = head.next.next;
         } else {
             ListNode temp = head;
-            while (index > 1) {
+            while (index > 0) {
                 temp = temp.next;
                 index--;
             }
             temp.next = temp.next.next;
         }
-
-        length--;
+        size--;
     }
 }
