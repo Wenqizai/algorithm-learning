@@ -1,7 +1,5 @@
 package com.wenqi.demo01.sort;
 
-import cn.hutool.core.text.split.SplitIter;
-
 import java.util.Arrays;
 
 /**
@@ -29,25 +27,52 @@ public class MergeSort {
         merge(nums, left, mid, right);
     }
 
-    /* 合并左子数组和右子数组 */
+    /**
+     * 合并两个有序数组
+     * 数组1 : left ~ mid
+     * 数组2 : mid+1 ~ right
+     * <p>
+     * 合并两个有序数组, 合并后的结果放在 nums[left ~ right] 中,
+     * 需要满足合并完的数组大小等于两个数组的大小之和, 此时需要借助临时数组 tmp 存储合并后的结果, 空间复杂度 O(n)
+     */
     static void merge(int[] nums, int left, int mid, int right) {
-        // 左子数组区间为 [left, mid], 右子数组区间为 [mid+1, right]
         // 创建一个临时数组 tmp ，用于存放合并后的结果
         int[] tmp = new int[right - left + 1];
-        // 初始化左子数组和右子数组的起始索引
+
+        // 左子数组区间为 [left, mid], 右子数组区间为 [mid+1, right]
+        // 左数组开始索引 left
+        // 右数组开始索引 mid+1
+        // 临时数组开始索引 0
         int i = left, j = mid + 1, k = 0;
-        // 当左右子数组都还有元素时，进行比较并将较小的元素复制到临时数组中
+
+        // 保证数组不越界情况下, 遍历两个数组, 比较指针指向的元素大小, 小的放入临时数组中
         while (i <= mid && j <= right) {
-            if (nums[i] <= nums[j]) tmp[k++] = nums[i++];
-            else tmp[k++] = nums[j++];
+            if (nums[i] <= nums[j]) {
+                tmp[k] = nums[i];
+                i++;
+            } else {
+                tmp[k] = nums[j];
+                j++;
+            }
+            k++;
         }
-        // 将左子数组和右子数组的剩余元素复制到临时数组中
+
+        // 如果左子数组还有剩余元素，证明 left.size > right.size
+        // 则将剩余元素复制到临时数组中
         while (i <= mid) {
-            tmp[k++] = nums[i++];
+            tmp[k] = nums[i];
+            k++;
+            i++;
         }
+
+        // 如果右子数组还有剩余元素，证明 left.size < right.size
+        // 则将剩余元素复制到临时数组中
         while (j <= right) {
-            tmp[k++] = nums[j++];
+            tmp[k] = nums[j];
+            k++;
+            j++;
         }
+
         // 将临时数组 tmp 中的元素复制回原数组 nums 的对应区间
         for (k = 0; k < tmp.length; k++) {
             nums[left + k] = tmp[k];
