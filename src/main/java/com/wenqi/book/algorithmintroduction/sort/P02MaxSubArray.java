@@ -1,4 +1,4 @@
-package com.wenqi.book.algorithmintroduction;
+package com.wenqi.book.algorithmintroduction.sort;
 
 /**
  * @author liangwenqi
