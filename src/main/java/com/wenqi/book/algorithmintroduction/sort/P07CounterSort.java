@@ -8,6 +8,7 @@ import java.util.Arrays;
  * 2. 统计 origin 元素的个数并用 counter 来保存, counter 保存的 index 就是 origin 元素的大小值
  * 3. 计算 counter 的累计值, 即 count[i] = count[i] + count[i -1], 累计值 = 本身 + 前一个值
  * 4. 根据 counter 的累计值, 转移 origin 的元素到 result 中, 每转移一个 counter 累计值减 1
+ *
  * @author liangwenqi
  * @date 2024/7/29
  */
@@ -55,7 +56,8 @@ public class P07CounterSort {
         // 开始排序: 根据 counter 计数, 将 origin 的元素, 由 counter 得到的下标, 转移到 result 中
         // 比如: origin[2] = 3  -> counter[3] = 4 -> result[4] = 3
         // 相当于 count[3] 的值用作 result 的下标, 值为 origin[2]
-        for (int num : origin) {
+        for (int j = origin.length - 1; j > 0; j--) {
+            int num = origin[j];
             result[counter[num] - 1] = num;
             // origin 挪动元素到 result 后, 对应的计算器要减 1
             counter[num] = counter[num] - 1;
